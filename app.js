@@ -10,17 +10,19 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));//view中获取模板
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/',express.static(path.join(__dirname, 'public')));
+app.use('/wap',express.static(path.join(__dirname, 'wap/dist')));//从wap文件夹中获取静态文件
+app.use('/pc',express.static(path.join(__dirname, 'pc/dist')));//从pc文件夹中获取静态文件
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', indexRouter);//路由
+app.use('/api', usersRouter);//接口改名为api
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
